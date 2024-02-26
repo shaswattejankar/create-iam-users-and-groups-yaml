@@ -1,0 +1,18 @@
+Users: 
+  - admin1
+  - admin2
+  - dev1
+  - dev2
+  - intern1
+  - intern2
+
+AssignmentGroups:
+  Admin: 
+    - admin1
+    - admin2
+  Developer: 
+    - dev1
+    - dev2
+  ViewOnly: 
+    - intern1
+    - intern2
