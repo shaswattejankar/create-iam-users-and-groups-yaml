@@ -1,13 +1,21 @@
 import boto3
-from botocore.exceptions import ClientError
 import yaml
 
-#access the iam service
-iam = boto3.client('iam')
+#Paste your bucket name
+bucket_name = 'myyamlconfigfile'
+#Paste your Object name
+key_name = 'data_config.yaml'
 
-#read the config file:-
-with open('02_data_config.yaml') as f:
-    dict = yaml.safe_load(f)
+#access s3 objects
+s3 = boto3.client('s3')
+resobj = s3.get_object(
+    Bucket=bucket_name, 
+    Key=key_name, 
+)
+
+#read the .yaml file and save it's contents in a variable of type dict
+yaml_data = resobj['Body'].read().decode('utf-8')
+dict = yaml.safe_load(yaml_data)
 
 #CHECK if yaml file read correctly
 #read the keys and values
@@ -16,6 +24,9 @@ users = dict['Users']
 print('users : ', users)
 groups = dict['AssignmentGroups']
 print('Groups : ', groups)
+
+#access iam client
+iam = boto3.client('iam')
 
 #creating user from Users key in yaml file saved in dict
 print('\n------')
